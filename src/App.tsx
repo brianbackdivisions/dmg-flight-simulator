@@ -51,7 +51,7 @@ function AppContent() {
           key={`${stage}-${m1Screen}-${m2Screen}-${m3Screen}`}
           initial={pageHidden ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={pageHidden ? false : { opacity: 0, y: -8 }}
+          exit={pageHidden ? undefined : { opacity: 0, y: -8 }}
           transition={{ duration: 0.4, ease: 'easeInOut' }}
           className="h-full"
         >
