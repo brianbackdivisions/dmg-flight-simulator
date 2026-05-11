@@ -4,6 +4,7 @@ import { MapPin, Camera, FileText, List, Check } from 'lucide-react';
 import { useStore } from '@/state/store';
 import { AIEngineIcon } from '@/components/shared/AIEngineIcon';
 import { TaskVerificationRow } from './TaskVerificationRow';
+import { InvoiceProtectionPanel } from './InvoiceProtectionPanel';
 import { WorkCompletionStatus, ConfidenceLevel } from '@/data/types';
 
 // ─── Input signal cards ───────────────────────────────────────────────────────
@@ -38,10 +39,11 @@ const INPUT_SIGNALS = [
 // ─── Verdict forming items ────────────────────────────────────────────────────
 
 const VERDICT_ITEMS = [
-  { label: 'Work Completion', initial: 'Analyzing photo evidence...' },
-  { label: 'Confidence Gate', initial: 'Running confidence model...' },
-  { label: 'Labor Assessment', initial: 'Evaluating labor hours...' },
-  { label: 'Zero-Touch Eligibility', initial: 'Checking approval criteria...' },
+  { label: 'Work Completion',       initial: 'Analyzing photo evidence...' },
+  { label: 'Confidence Gate',       initial: 'Running confidence model...' },
+  { label: 'Labor Assessment',      initial: 'Evaluating labor hours vs GPS time...' },
+  { label: 'Materials Benchmarking',initial: 'Auditing parts costs against market data...' },
+  { label: 'Zero-Touch Eligibility',initial: 'Checking approval criteria...' },
 ];
 
 // ─── Log stream ───────────────────────────────────────────────────────────────
@@ -398,11 +400,17 @@ export function VerificationProcessing() {
                   </div>
                 </motion.div>
 
+                {/* Invoice protection */}
+                <InvoiceProtectionPanel
+                  assessment={m3Response!.verification_results.labor_hours_assessment}
+                  delay={0.4}
+                />
+
                 {/* CTA */}
                 <motion.button
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.55 }}
+                  transition={{ delay: 0.75 }}
                   onClick={() => dispatch({ type: 'SET_STAGE', payload: 'summary' })}
                   className="w-full py-2.5 rounded-[6px] bg-accent-action text-white font-mono text-[12px]
                              font-bold tracking-[0.1em] uppercase hover:bg-[#d4561e] transition-colors
