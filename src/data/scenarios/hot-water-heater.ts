@@ -3,9 +3,10 @@ export const hotWaterHeaterScenario = {
   label: 'Hot Water Heater Repair',
   service_line: 'Plumbing',
   urgency: 'emergency' as const,
+  site_profile: "Doctor's Office",
 
   input: {
-    property: 'Heartland Dental – Bloomington, IL',
+    property: "National Doctor's Office – Bloomington, IL",
     description: "No hot water. Tried pilot. Doesn't seem to be running.",
     service_line_input: null,
     urgency: 'emergency' as const,
@@ -26,7 +27,5 @@ export const hotWaterHeaterScenario = {
   },
 
   wv_demo_work_id: 'DEMO_WV_PLUMBING_WATER_HEATER_01',
-
-  // Map center for Module 2
   map_center: [-88.9937, 40.4842] as [number, number],
 };

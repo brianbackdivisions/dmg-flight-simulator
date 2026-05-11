@@ -56,7 +56,7 @@ export async function qualify(
 
 export async function match(req: MatchRequest): Promise<MatchResponse> {
   if (USE_MOCK) {
-    await delay(3000 + Math.random() * 1000);
+    await delay(7000 + Math.random() * 1000);
     return MOCK_MATCH_RESPONSE;
   }
   return post('/match', req);

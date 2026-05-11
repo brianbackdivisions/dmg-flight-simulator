@@ -19,7 +19,7 @@ export function FullProviderList({ providers, totalMatched }: Props) {
         className="w-full flex items-center justify-between px-5 py-3 text-left"
       >
         <span className="font-sans text-[13px] text-text-secondary underline">
-          View all {totalMatched} matched providers
+          View all {providers.length} matched providers
         </span>
         <ChevronDown
           size={13}

@@ -3,9 +3,7 @@ import { useEffect } from 'react';
 import { StoreProvider, useStore } from '@/state/store';
 import { AppShell } from '@/components/shell/AppShell';
 import { ScenarioSelector } from '@/components/module1/ScenarioSelector';
-import { IntakeForm } from '@/components/module1/IntakeForm';
-import { QualificationProcessing } from '@/components/module1/QualificationProcessing';
-import { EnrichedOutput } from '@/components/module1/EnrichedOutput';
+import { Module1Screen } from '@/components/module1/Module1Screen';
 import { MarketplaceProcessing } from '@/components/module2/MarketplaceProcessing';
 import { ProviderRecommendations } from '@/components/module2/ProviderRecommendations';
 import { PhotoGallery } from '@/components/module3/PhotoGallery';
@@ -15,16 +13,12 @@ import { SummaryScreen } from '@/components/summary/SummaryScreen';
 
 function AppContent() {
   const { state } = useStore();
-  const { stage, m1Screen, m2Screen, m3Screen } = state;
+  const { stage, m2Screen, m3Screen } = state;
 
   function renderContent() {
     if (stage === 'scenario') return <ScenarioSelector />;
 
-    if (stage === 'module1') {
-      if (m1Screen === 'form') return <IntakeForm />;
-      if (m1Screen === 'processing') return <QualificationProcessing />;
-      if (m1Screen === 'output') return <EnrichedOutput />;
-    }
+    if (stage === 'module1') return <Module1Screen />;
 
     if (stage === 'module2') {
       if (m2Screen === 'processing') return <MarketplaceProcessing />;
@@ -48,7 +42,7 @@ function AppContent() {
     <AppShell>
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${stage}-${m1Screen}-${m2Screen}-${m3Screen}`}
+          key={`${stage}-${stage === 'module1' ? 'persistent' : `${m2Screen}-${m3Screen}`}`}
           initial={pageHidden ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={pageHidden ? undefined : { opacity: 0, y: -8 }}

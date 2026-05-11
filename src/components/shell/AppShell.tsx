@@ -17,12 +17,14 @@ export function AppShell({ children }: AppShellProps) {
       {/* Top nav rail */}
       {!state.presenterMode && (
         <header className="h-16 border-b border-border-subtle bg-bg-surface1 flex items-center px-6 gap-6 shrink-0">
-          {/* DMG wordmark */}
-          <div className="flex items-center gap-2 shrink-0">
-            <img src={dmgLogo} alt="DMG" className="h-8 w-auto" />
-            <div className="flex flex-col leading-none">
-              <span className="font-sans text-[13px] font-600 text-text-primary">AI Flight Simulator</span>
-              <span className="font-mono text-[10px] text-text-tertiary uppercase tracking-wider">Demo Platform</span>
+          {/* DMG logo + FLIGHT SIMULATOR designation */}
+          <div className="flex items-center gap-3 shrink-0">
+            <img src={dmgLogo} alt="DMG" className="h-9 w-auto" />
+            <div className="flex flex-col gap-[4px] pl-3 border-l border-border-subtle">
+              <span className="font-mono text-[11px] font-bold tracking-[0.28em] text-text-primary uppercase leading-none">
+                Flight Simulator
+              </span>
+              <div className="h-[2px] rounded-full bg-accent-action opacity-75" />
             </div>
           </div>
 
@@ -62,7 +64,7 @@ export function AppShell({ children }: AppShellProps) {
       {/* Presenter mode minimal bar */}
       {state.presenterMode && (
         <div className="h-8 border-b border-border-subtle bg-bg-base flex items-center px-4 justify-between shrink-0">
-          <span className="font-mono text-[10px] text-text-tertiary uppercase tracking-wider">DMG AI Flight Simulator</span>
+          <span className="font-mono text-[10px] text-text-tertiary uppercase tracking-wider">DMG Flight Simulator</span>
           <button
             onClick={() => dispatch({ type: 'SET_PRESENTER_MODE', payload: false })}
             className="font-mono text-[10px] text-text-tertiary hover:text-accent-ai transition-colors uppercase tracking-wider"

@@ -3,6 +3,7 @@ import { useStore } from '@/state/store';
 import { TaskVerificationRow } from './TaskVerificationRow';
 import { LaborPanel } from './LaborPanel';
 import { WorkCompletionStatus, ConfidenceLevel } from '@/data/types';
+import { AIEngineIcon } from '@/components/shared/AIEngineIcon';
 
 function ConfidenceDots({ level }: { level: ConfidenceLevel }) {
   const count =
@@ -110,9 +111,12 @@ export function VerdictReport() {
         transition={{ delay: 0.15 }}
         className="card p-5"
       >
-        <p className="font-mono text-[10px] text-accent-ai uppercase tracking-widest mb-2">
-          AI WORK VERIFICATION SUMMARY
-        </p>
+        <div className="flex items-center gap-1.5 mb-2">
+          <AIEngineIcon size={12} className="text-accent-ai" />
+          <p className="font-mono text-[10px] text-accent-ai uppercase tracking-widest">
+            AI Quality Verification Summary
+          </p>
+        </div>
         <div className="w-full h-px bg-border-subtle mb-4" />
         <p className="font-sans text-[15px] text-text-primary leading-[1.7]">{rationale}</p>
       </motion.div>
@@ -146,10 +150,11 @@ export function VerdictReport() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
         onClick={() => dispatch({ type: 'SET_STAGE', payload: 'summary' })}
-        className="w-full py-3 rounded-[6px] bg-accent-action text-white font-sans text-[16px] font-500
-                   hover:bg-[#d4561e] transition-colors"
+        className="w-full py-3 rounded-[6px] bg-accent-action text-white font-mono text-[13px] font-bold
+                   tracking-[0.1em] uppercase hover:bg-[#d4561e] transition-colors flex items-center justify-center gap-2"
       >
-        View Demo Summary →
+        <AIEngineIcon size={14} />
+        View Job Debrief →
       </motion.button>
     </div>
   );

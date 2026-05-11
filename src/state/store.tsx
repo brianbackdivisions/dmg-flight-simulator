@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, type ReactNode } from 'react';
 import type { DemoState, DemoAction, IntakeFormInput } from '@/data/types';
-import { hotWaterHeaterScenario } from '@/data/scenarios';
+import { SCENARIOS } from '@/data/scenarios';
 
 const initialInput: IntakeFormInput = {
   property: '',
@@ -28,12 +28,17 @@ const initialState: DemoState = {
 function reducer(state: DemoState, action: DemoAction): DemoState {
   switch (action.type) {
     case 'SELECT_SCENARIO': {
-      const scenario =
-        action.payload === 'hot-water-heater'
-          ? hotWaterHeaterScenario
-          : action.payload === 'hvac-not-cooling'
-          ? { scenario_id: 'hvac-not-cooling', input: { property: 'Walgreens – Austin, TX', description: 'AC not cooling. Store is hot. Customers complaining.', service_line_input: null, urgency: 'emergency' as const, customer: 'Walgreens' } }
-          : { scenario_id: 'ceiling-tile-damage', input: { property: 'Dollar General – Memphis, TN', description: 'Several ceiling tiles damaged and sagging near the back stockroom. Possible water damage.', service_line_input: null, urgency: 'routine' as const, customer: 'Dollar General' } };
+      if (action.payload === 'custom') {
+        return {
+          ...state,
+          selectedScenario: 'custom',
+          stage: 'module1',
+          m1Screen: 'form',
+          m1Input: initialInput,
+        };
+      }
+      const scenario = SCENARIOS.find((s) => s.scenario_id === action.payload);
+      if (!scenario) return state;
       return {
         ...state,
         selectedScenario: action.payload,

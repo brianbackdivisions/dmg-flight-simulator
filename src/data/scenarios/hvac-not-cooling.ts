@@ -3,9 +3,10 @@ export const hvacScenario = {
   label: 'HVAC Not Cooling',
   service_line: 'HVAC',
   urgency: 'emergency' as const,
+  site_profile: 'National Pharmacy',
 
   input: {
-    property: 'Walgreens – Austin, TX',
+    property: 'National Pharmacy – Austin, TX',
     description: 'AC not cooling. Store is hot. Customers complaining.',
     service_line_input: null,
     urgency: 'emergency' as const,
@@ -26,6 +27,5 @@ export const hvacScenario = {
   },
 
   wv_demo_work_id: 'DEMO_WV_HVAC_NOT_COOLING_01',
-
   map_center: [-97.7431, 30.2672] as [number, number],
 };

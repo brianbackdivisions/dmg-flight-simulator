@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MapPin, Star } from 'lucide-react';
+import { MapPin, Star, Clock, Navigation } from 'lucide-react';
 import type { ProviderScore } from '@/data/types';
 import { ConfidenceLevel, BEHAVIOR_LABEL_MAP } from '@/data/types';
 
@@ -8,6 +8,28 @@ interface Props {
   rank: number;
   delay?: number;
   onViewDetails: () => void;
+}
+
+function getEtaAndSignal(distanceMiles: number): { eta: string; signal: string; signalColor: string } {
+  if (distanceMiles < 8) {
+    return {
+      eta: '< 30 min',
+      signal: 'Available now',
+      signalColor: 'text-status-pass',
+    };
+  } else if (distanceMiles < 13) {
+    return {
+      eta: '~45 min',
+      signal: 'Currently servicing a nearby location',
+      signalColor: 'text-status-warn',
+    };
+  } else {
+    return {
+      eta: '~1 hr',
+      signal: 'En route from previous job',
+      signalColor: 'text-text-tertiary',
+    };
+  }
 }
 
 function ConfidenceDots({ level }: { level: ConfidenceLevel }) {
@@ -30,10 +52,7 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
       <span className="font-mono text-[11px] text-text-tertiary w-14 shrink-0">{label}</span>
       <span className="font-mono text-[13px] text-text-primary w-8 shrink-0">{value}</span>
       <div className="w-20 h-1.5 rounded-full bg-bg-surface2">
-        <div
-          className="h-full rounded-full bg-accent-ai"
-          style={{ width: `${value}%` }}
-        />
+        <div className="h-full rounded-full bg-accent-ai" style={{ width: `${value}%` }} />
       </div>
     </div>
   );
@@ -43,7 +62,6 @@ function BehaviorLabel({ tag }: { tag: string }) {
   const label = BEHAVIOR_LABEL_MAP[tag] ?? tag.toUpperCase();
   const isNegative = tag === 'chronic_ghoster';
   const isEngagement = tag === 'active_viewer' || tag === 'chronic_ghoster';
-
   return (
     <span
       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-[3px] border font-mono text-[10px] uppercase tracking-wide ${
@@ -62,6 +80,7 @@ function BehaviorLabel({ tag }: { tag: string }) {
 
 export function RecommendationCard({ provider, rank, delay = 0, onViewDetails }: Props) {
   const isTop = rank === 1;
+  const { eta, signal, signalColor } = getEtaAndSignal(provider.provider_property_distance_in_miles);
 
   return (
     <motion.div
@@ -83,9 +102,22 @@ export function RecommendationCard({ provider, rank, delay = 0, onViewDetails }:
             )}
           </div>
         </div>
-        {provider.confidence !== undefined && (
-          <ConfidenceDots level={provider.confidence} />
-        )}
+        {provider.confidence !== undefined && <ConfidenceDots level={provider.confidence} />}
+      </div>
+
+      {/* ETA + Routing signal row */}
+      <div className="flex items-center gap-4 mb-3 px-3 py-2 rounded-[4px] bg-bg-surface2 border border-border-subtle">
+        <div className="flex items-center gap-1.5">
+          <Clock size={11} className="text-accent-ai shrink-0" />
+          <span className="font-mono text-[11px] text-text-primary">
+            ETA <span className="text-accent-ai font-bold">{eta}</span>
+          </span>
+        </div>
+        <div className="w-px h-3 bg-border-subtle" />
+        <div className="flex items-center gap-1.5">
+          <Navigation size={11} className={`shrink-0 ${signalColor}`} />
+          <span className={`font-mono text-[11px] ${signalColor}`}>{signal}</span>
+        </div>
       </div>
 
       {/* AI rationale */}
@@ -135,10 +167,7 @@ export function RecommendationCard({ provider, rank, delay = 0, onViewDetails }:
 
       {/* View details */}
       <div className="mt-4 pt-3 border-t border-border-subtle flex justify-end">
-        <button
-          onClick={onViewDetails}
-          className="font-sans text-[13px] text-accent-ai hover:underline"
-        >
+        <button onClick={onViewDetails} className="font-sans text-[13px] text-accent-ai hover:underline">
           View Details ›
         </button>
       </div>

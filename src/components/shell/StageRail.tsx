@@ -4,9 +4,9 @@ import { useStore } from '@/state/store';
 import type { AppStage } from '@/data/types';
 
 const STAGES: { id: AppStage; label: string; num: number }[] = [
-  { id: 'module1', label: 'Qualification', num: 1 },
-  { id: 'module2', label: 'Marketplace', num: 2 },
-  { id: 'module3', label: 'Verification', num: 3 },
+  { id: 'module1', label: 'Qualification & Enrichment', num: 1 },
+  { id: 'module2', label: 'Marketplace Matching', num: 2 },
+  { id: 'module3', label: 'Quality Verification', num: 3 },
 ];
 
 const stageOrder: AppStage[] = ['scenario', 'module1', 'module2', 'module3', 'summary'];
