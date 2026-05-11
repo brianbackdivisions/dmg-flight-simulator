@@ -147,10 +147,13 @@ export function RecommendationCard({ provider, rank, delay = 0, onViewDetails }:
         </div>
 
         <div className="flex flex-col gap-1.5 text-right">
-          <span className="font-mono text-[12px] text-text-secondary flex items-center gap-1 justify-end">
-            <MapPin size={10} />
-            {provider.provider_property_distance_in_miles} mi
-          </span>
+          <div className="flex flex-col items-end gap-0.5">
+            <span className="font-mono text-[12px] text-text-secondary flex items-center gap-1 justify-end">
+              <MapPin size={10} />
+              {provider.provider_property_distance_in_miles} mi
+            </span>
+            <span className="font-mono text-[9px] text-text-tertiary">from registered HQ</span>
+          </div>
           {provider.rating && (
             <span className="font-mono text-[12px] text-text-secondary flex items-center gap-1 justify-end">
               <Star size={10} />
@@ -158,9 +161,12 @@ export function RecommendationCard({ provider, rank, delay = 0, onViewDetails }:
             </span>
           )}
           {provider.jobs_completed && (
-            <span className="font-mono text-[12px] text-text-secondary">
-              {provider.jobs_completed.toLocaleString()} jobs
-            </span>
+            <div className="flex flex-col items-end gap-0.5">
+              <span className="font-mono text-[12px] text-text-secondary">
+                {provider.jobs_completed.toLocaleString()} jobs
+              </span>
+              <span className="font-mono text-[9px] text-text-tertiary">trailing 12 mo</span>
+            </div>
           )}
         </div>
       </div>

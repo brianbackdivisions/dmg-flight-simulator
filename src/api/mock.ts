@@ -37,22 +37,39 @@ export const MOCK_QUALIFY_RESPONSE: PredictionResponse = {
 
 export const MOCK_WORK_ACTIONS: WorkAction[] = [
   {
+    action_id: 'wa-000',
+    type: WorkActionType.WORK_ACTION_TYPE_DOCUMENTATION,
+    category: WorkActionCategory.WORK_ACTION_CATEGORY_OTHERS,
+    priority: WorkActionPriority.WORK_ACTION_PRIORITY_HIGH,
+    description: 'Identify yourself to site management at front desk, sign in, and be escorted to the utility room service location',
+    status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
+    creation_context: {
+      rationale: 'Commercial dental office requires sign-in and escort per special instructions. Establishing site contact ensures access and accountability.',
+      evidences: [{ id: 'ev-spec-000', type: EvidenceType.EVIDENCE_TYPE_WORK_SCOPE, rationale: 'Special instructions specify front desk sign-in and manager escort.' }],
+    },
+  },
+  {
+    action_id: 'wa-001a',
+    type: WorkActionType.WORK_ACTION_TYPE_DOCUMENTATION,
+    category: WorkActionCategory.WORK_ACTION_CATEGORY_INSPECTION,
+    priority: WorkActionPriority.WORK_ACTION_PRIORITY_HIGH,
+    description: 'Take before photos of water heater unit, pilot assembly, and surrounding area documenting pre-service condition',
+    status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
+    creation_context: {
+      rationale: 'Before photos establish baseline condition for quality verification and protect both parties in scope disputes.',
+      evidences: [],
+    },
+  },
+  {
     action_id: 'wa-001',
     type: WorkActionType.WORK_ACTION_TYPE_ESSENTIAL,
     category: WorkActionCategory.WORK_ACTION_CATEGORY_INSPECTION,
     priority: WorkActionPriority.WORK_ACTION_PRIORITY_HIGH,
-    description: 'Inspect pilot assembly and thermocouple for damage or buildup',
+    description: 'Inspect pilot assembly and thermocouple for damage, corrosion, or carbon buildup',
     status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
     creation_context: {
-      rationale:
-        'Customer reported pilot light issue. Inspection of pilot assembly is required to determine root cause.',
-      evidences: [
-        {
-          id: 'ev-scope-001',
-          type: EvidenceType.EVIDENCE_TYPE_WORK_SCOPE,
-          rationale: 'Work scope identifies pilot assembly inspection as primary task.',
-        },
-      ],
+      rationale: 'Customer reported pilot light issue. Inspection of pilot assembly is required to determine root cause before any cleaning or re-ignition attempt.',
+      evidences: [{ id: 'ev-scope-001', type: EvidenceType.EVIDENCE_TYPE_WORK_SCOPE, rationale: 'Work scope identifies pilot assembly inspection as primary task.' }],
     },
   },
   {
@@ -60,11 +77,10 @@ export const MOCK_WORK_ACTIONS: WorkAction[] = [
     type: WorkActionType.WORK_ACTION_TYPE_ESSENTIAL,
     category: WorkActionCategory.WORK_ACTION_CATEGORY_CLEANING,
     priority: WorkActionPriority.WORK_ACTION_PRIORITY_HIGH,
-    description: 'Clean pilot orifice and thermocouple',
+    description: 'Clean pilot orifice, thermocouple tip, and burner assembly — remove soot and carbon deposits',
     status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
     creation_context: {
-      rationale:
-        'Cleaning is necessary before re-ignition attempt to ensure proper gas flow and ignition.',
+      rationale: 'Thorough cleaning of all pilot components is necessary to ensure proper gas flow and reliable ignition.',
       evidences: [],
     },
   },
@@ -73,10 +89,10 @@ export const MOCK_WORK_ACTIONS: WorkAction[] = [
     type: WorkActionType.WORK_ACTION_TYPE_ESSENTIAL,
     category: WorkActionCategory.WORK_ACTION_CATEGORY_REPAIR,
     priority: WorkActionPriority.WORK_ACTION_PRIORITY_HIGH,
-    description: 'Re-ignite pilot light per manufacturer procedure and verify stable flame',
+    description: 'Re-ignite pilot light following manufacturer procedure and verify stable, continuous blue flame',
     status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
     creation_context: {
-      rationale: 'Re-ignition is the primary resolution objective.',
+      rationale: 'Re-ignition is the primary resolution objective. Flame must be steady and blue to confirm safe and complete repair.',
       evidences: [],
     },
   },
@@ -85,17 +101,41 @@ export const MOCK_WORK_ACTIONS: WorkAction[] = [
     type: WorkActionType.WORK_ACTION_TYPE_AUXILIARY,
     category: WorkActionCategory.WORK_ACTION_CATEGORY_TESTING,
     priority: WorkActionPriority.WORK_ACTION_PRIORITY_MEDIUM,
-    description: 'Test hot water supply at nearest fixture and verify temperature recovery',
+    description: 'Test hot water supply at nearest fixture — run water and confirm temperature recovery to operational level',
     status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
     creation_context: {
-      rationale: 'Functional test confirms repair success and ensures customer satisfaction.',
+      rationale: 'End-to-end functional test confirms repair success and validates that service has been fully restored for the customer.',
+      evidences: [],
+    },
+  },
+  {
+    action_id: 'wa-005',
+    type: WorkActionType.WORK_ACTION_TYPE_DOCUMENTATION,
+    category: WorkActionCategory.WORK_ACTION_CATEGORY_INSPECTION,
+    priority: WorkActionPriority.WORK_ACTION_PRIORITY_HIGH,
+    description: 'Take after photos of pilot assembly with flame visible, water heater controls, and faucet running hot water confirming service restoration',
+    status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
+    creation_context: {
+      rationale: 'After photos provide photographic proof of completion for AI quality verification and customer records.',
+      evidences: [],
+    },
+  },
+  {
+    action_id: 'wa-006',
+    type: WorkActionType.WORK_ACTION_TYPE_DOCUMENTATION,
+    category: WorkActionCategory.WORK_ACTION_CATEGORY_OTHERS,
+    priority: WorkActionPriority.WORK_ACTION_PRIORITY_HIGH,
+    description: 'Clean up work area, return utility room to pre-service condition, and obtain site manager signature confirming hot water restoration before departure',
+    status: WorkActionStatus.WORK_ACTION_STATUS_TODO,
+    creation_context: {
+      rationale: 'Site cleanliness and manager sign-off close the service loop and confirm customer satisfaction before the provider leaves the property.',
       evidences: [],
     },
   },
 ];
 
 export const MOCK_MATCH_RESPONSE: MatchResponse = {
-  total_matched: 40,
+  total_matched: 51,
   providers: [
     {
       provider_id: 'prov-001',
@@ -179,8 +219,7 @@ export const MOCK_MATCH_RESPONSE: MatchResponse = {
   filtration_stats: [
     { reason: 'INSURANCE LAPSED OR MISSING', count: 14 },
     { reason: 'NO ACTIVE PLUMBING LICENSE', count: 8 },
-    { reason: 'OUTSIDE GEOGRAPHIC COVERAGE', count: 22 },
-    { reason: 'CAPACITY LIMIT REACHED', count: 5 },
+    { reason: 'UNABLE TO MEET SLA', count: 5 },
     { reason: 'CUSTOMER BLOCK ON FILE', count: 2 },
   ],
 };

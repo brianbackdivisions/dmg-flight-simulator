@@ -112,13 +112,82 @@ export function ProviderRecommendations() {
       {/* Job brief card */}
       <JobBriefCard />
 
+      {/* Two-step pipeline summary */}
+      <motion.div
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.08 }}
+        className="card p-4 border-l-2 border-l-accent-ai"
+      >
+        <p className="font-mono text-[10px] text-text-tertiary uppercase tracking-widest mb-3">
+          Matching Pipeline
+        </p>
+        <div className="flex items-center gap-3 flex-wrap">
+          {/* Step 1 */}
+          <div className="flex flex-col gap-0.5">
+            <p className="font-mono text-[10px] text-text-tertiary uppercase tracking-wide">Step 1 · Market Scan</p>
+            <p className="font-mono text-[18px] text-text-primary font-bold leading-none">
+              {m2Response.total_matched}
+            </p>
+            <p className="font-sans text-[11px] text-text-tertiary">providers evaluated</p>
+          </div>
+
+          <div className="flex items-center gap-1 text-text-tertiary">
+            <div className="h-px w-6 bg-border-subtle" />
+            <span className="font-mono text-[12px] text-accent-ai">→</span>
+            <div className="h-px w-6 bg-border-subtle" />
+          </div>
+
+          {/* Excluded */}
+          <div className="flex flex-col gap-0.5">
+            <p className="font-mono text-[10px] text-text-tertiary uppercase tracking-wide">Excluded</p>
+            <p className="font-mono text-[18px] text-status-fail font-bold leading-none">
+              {m2Response.filtration_stats?.reduce((s, f) => s + f.count, 0) ?? 0}
+            </p>
+            <p className="font-sans text-[11px] text-text-tertiary">
+              {m2Response.filtration_stats?.map(f => `${f.reason.split(' ').slice(0, 2).join(' ')} (${f.count})`).join(' · ')}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1 text-text-tertiary">
+            <div className="h-px w-6 bg-border-subtle" />
+            <span className="font-mono text-[12px] text-accent-ai">→</span>
+            <div className="h-px w-6 bg-border-subtle" />
+          </div>
+
+          {/* Qualified */}
+          <div className="flex flex-col gap-0.5">
+            <p className="font-mono text-[10px] text-text-tertiary uppercase tracking-wide">Qualified</p>
+            <p className="font-mono text-[18px] text-status-pass font-bold leading-none">
+              {m2Response.total_matched - (m2Response.filtration_stats?.reduce((s, f) => s + f.count, 0) ?? 0)}
+            </p>
+            <p className="font-sans text-[11px] text-text-tertiary">passed all criteria</p>
+          </div>
+
+          <div className="flex items-center gap-1 text-text-tertiary">
+            <div className="h-px w-6 bg-border-subtle" />
+            <span className="font-mono text-[12px] text-accent-ai">→</span>
+            <div className="h-px w-6 bg-border-subtle" />
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex flex-col gap-0.5">
+            <p className="font-mono text-[10px] text-accent-ai uppercase tracking-wide">Step 2 · AI Ranking</p>
+            <p className="font-mono text-[18px] text-accent-ai font-bold leading-none">
+              {allProviders.length} shown
+            </p>
+            <p className="font-sans text-[11px] text-text-tertiary">ranked by speed & quality</p>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Headline */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
         <p className="font-mono text-[11px] text-accent-ai uppercase tracking-widest mb-1">
           AI Recommended Providers
         </p>
         <p className="font-sans text-[14px] text-text-secondary">
-          Ranked by fit, reliability, and availability for this job.
+          Ranked by speed and quality performance — the top match is auto-assigned unless overridden.
         </p>
       </motion.div>
 

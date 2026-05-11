@@ -242,6 +242,80 @@ function CenterColumn({
   );
 }
 
+// ─── Site history mock data ────────────────────────────────────────────────────
+
+const SITE_HISTORY = [
+  {
+    date: 'Apr 22, 2026',
+    service: 'Plumbing',
+    description: 'Replaced flush valve in employee restroom — resolved chronic running toilet',
+    provider: 'Summit Plumbing Solutions',
+  },
+  {
+    date: 'Mar 8, 2026',
+    service: 'HVAC',
+    description: 'Quarterly filter replacement and evaporator coil cleaning',
+    provider: 'Central Illinois Mechanical',
+  },
+  {
+    date: 'Feb 14, 2026',
+    service: 'Plumbing',
+    description: 'Snaked slow drain in break room sink — grease buildup cleared',
+    provider: 'Summit Plumbing Solutions',
+  },
+  {
+    date: 'Jan 3, 2026',
+    service: 'Electrical',
+    description: 'Replaced 3 fluorescent ballasts in exam room 2 — restored lighting',
+    provider: 'Midwest Electrical Group',
+  },
+];
+
+function SiteHistoryPanel() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="card border-l-2 border-l-accent-ai">
+      <button
+        className="w-full flex items-center justify-between px-4 py-3"
+        onClick={() => setOpen((o) => !o)}
+      >
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[10px] text-text-tertiary uppercase tracking-wider">Site History</span>
+          <span className="font-mono text-[10px] text-accent-ai">{SITE_HISTORY.length} recent work orders</span>
+        </div>
+        <ChevronDown size={12} className={`text-text-tertiary transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden"
+          >
+            <div className="px-4 pb-4 border-t border-border-subtle pt-3 space-y-3">
+              {SITE_HISTORY.map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-text-tertiary shrink-0 mt-1.5" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-mono text-[10px] text-text-tertiary">{item.date}</span>
+                      <span className="font-mono text-[10px] text-accent-ai uppercase">{item.service}</span>
+                    </div>
+                    <p className="font-sans text-[12px] text-text-primary leading-snug mt-0.5">{item.description}</p>
+                    <p className="font-mono text-[10px] text-text-tertiary mt-0.5">{item.provider}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 // ─── Right column: enriched output ────────────────────────────────────────────
 
 function AccuracyBar({ label, value, threshold }: { label: string; value: number; threshold: number }) {
@@ -351,6 +425,9 @@ function OutputColumn({ m1Response, m1WorkActions, onSendToMarketplace }: {
           ))}
         </div>
       </div>
+
+      {/* Site history */}
+      <SiteHistoryPanel />
 
       {/* Auto-qualification guardrail */}
       <GuardrailInline />
