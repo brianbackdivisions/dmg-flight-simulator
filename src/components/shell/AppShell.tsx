@@ -17,26 +17,30 @@ export function AppShell({ children }: AppShellProps) {
       {!state.presenterMode && (
         <header className="h-16 border-b border-border-subtle bg-bg-surface1 flex items-center px-6 gap-6 shrink-0">
           {/* DMG wordmark + FLIGHT SIMULATOR designation */}
-          <div className="flex items-center gap-4 shrink-0">
-            {/* DMG wordmark SVG */}
-            <div className="shrink-0">
-              <svg width="64" height="36" viewBox="0 0 64 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <text
-                  x="2" y="28"
-                  fontFamily="'Arial Black', 'Arial', sans-serif"
-                  fontWeight="900"
-                  fontSize="28"
-                  letterSpacing="1"
-                  fill="white"
-                >DMG</text>
-                <rect x="2" y="32" width="28" height="3" rx="1.5" fill="#E8672B" />
-              </svg>
-            </div>
-            <div className="flex flex-col gap-[5px]">
-              <span className="font-mono text-[18px] font-bold tracking-[0.18em] text-text-primary uppercase leading-none">
+          <div className="flex items-center gap-5 shrink-0">
+            {/* DMG wordmark — gray letterforms + orange underbar, matches brand asset */}
+            <svg width="88" height="38" viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text
+                x="0" y="62"
+                fontFamily="'Arial Black', 'Franklin Gothic Heavy', 'Impact', sans-serif"
+                fontWeight="900"
+                fontSize="62"
+                letterSpacing="3"
+                fill="#808285"
+              >DMG</text>
+              {/* Orange underline — left-aligned, ~width of "D" */}
+              <rect x="0" y="72" width="72" height="6" rx="3" fill="#E8672B" />
+            </svg>
+
+            {/* Divider */}
+            <div className="w-px h-7 bg-border-subtle opacity-60" />
+
+            {/* FLIGHT SIMULATOR label */}
+            <div className="flex flex-col gap-[4px]">
+              <span className="font-mono text-[17px] font-bold tracking-[0.16em] text-text-primary uppercase leading-none">
                 Flight Simulator
               </span>
-              <div className="h-[2px] rounded-full bg-accent-action opacity-80" />
+              <div className="h-[2px] w-full rounded-full bg-accent-action opacity-70" />
             </div>
           </div>
 
