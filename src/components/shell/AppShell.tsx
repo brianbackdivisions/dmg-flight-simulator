@@ -2,7 +2,6 @@ import { Presentation, RefreshCw } from 'lucide-react';
 import { useStore } from '@/state/store';
 import { StageRail } from './StageRail';
 import { JobBriefBanner } from './JobBriefBanner';
-import dmgLogo from '@/assets/hero.png';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -17,14 +16,16 @@ export function AppShell({ children }: AppShellProps) {
       {/* Top nav rail */}
       {!state.presenterMode && (
         <header className="h-16 border-b border-border-subtle bg-bg-surface1 flex items-center px-6 gap-6 shrink-0">
-          {/* DMG logo + FLIGHT SIMULATOR designation */}
-          <div className="flex items-center gap-3 shrink-0">
-            <img src={dmgLogo} alt="DMG" className="h-9 w-auto" />
-            <div className="flex flex-col gap-[4px] pl-3 border-l border-border-subtle">
-              <span className="font-mono text-[11px] font-bold tracking-[0.28em] text-text-primary uppercase leading-none">
+          {/* DMG wordmark + FLIGHT SIMULATOR designation */}
+          <div className="flex items-center gap-4 shrink-0">
+            <div className="px-3 py-1.5 rounded-[5px] bg-accent-action shrink-0">
+              <span className="font-mono text-[14px] font-bold text-white tracking-[0.06em] leading-none">DMG</span>
+            </div>
+            <div className="flex flex-col gap-[5px]">
+              <span className="font-mono text-[18px] font-bold tracking-[0.18em] text-text-primary uppercase leading-none">
                 Flight Simulator
               </span>
-              <div className="h-[2px] rounded-full bg-accent-action opacity-75" />
+              <div className="h-[2px] rounded-full bg-accent-action opacity-80" />
             </div>
           </div>
 
