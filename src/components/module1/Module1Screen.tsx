@@ -339,7 +339,7 @@ function AccuracyBar({ label, value, threshold }: { label: string; value: number
 }
 
 function GuardrailInline() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <div className="card border-l-2 border-l-accent-ai text-[13px]">
       <button className="w-full flex items-center justify-between px-4 py-3" onClick={() => setOpen((o) => !o)}>

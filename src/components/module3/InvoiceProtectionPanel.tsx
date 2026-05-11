@@ -41,9 +41,10 @@ function hrsLabel(h: number) {
 interface Props {
   assessment: LaborHoursAssessment;
   delay?: number;
+  className?: string;
 }
 
-export function InvoiceProtectionPanel({ assessment, delay = 0.4 }: Props) {
+export function InvoiceProtectionPanel({ assessment, delay = 0.4, className }: Props) {
   const laborInBand = assessment.is_appropriate;
 
   return (
@@ -51,7 +52,7 @@ export function InvoiceProtectionPanel({ assessment, delay = 0.4 }: Props) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
-      className="card p-4 space-y-4"
+      className={className ?? 'card p-4 space-y-4'}
     >
       {/* ── Header ─────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">

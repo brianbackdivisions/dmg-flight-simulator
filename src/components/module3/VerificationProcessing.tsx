@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Camera, FileText, List, Check } from 'lucide-react';
+import { MapPin, Camera, FileText, List, Check, ChevronDown } from 'lucide-react';
 import { useStore } from '@/state/store';
 import { AIEngineIcon } from '@/components/shared/AIEngineIcon';
 import { TaskVerificationRow } from './TaskVerificationRow';
@@ -91,6 +91,9 @@ export function VerificationProcessing() {
   const [activeVerdict, setActiveVerdict] = useState<number[]>([]);
   const [logLines, setLogLines]           = useState<string[]>([]);
   const [done, setDone]                   = useState(false);
+  const [rationaleOpen, setRationaleOpen]   = useState(false);
+  const [tasksOpen, setTasksOpen]           = useState(false);
+  const [invoiceOpen, setInvoiceOpen]       = useState(false);
   const startedRef = useRef(false);
 
   const { m3Response } = state;
@@ -365,18 +368,37 @@ export function VerificationProcessing() {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
-                  className="card p-3"
+                  className="card"
                 >
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <AIEngineIcon size={11} className="text-accent-ai" />
-                    <p className="font-mono text-[10px] text-accent-ai uppercase tracking-widest">
-                      AI Rationale
-                    </p>
-                  </div>
-                  <div className="w-full h-px bg-border-subtle mb-2" />
-                  <p className="font-sans text-[12px] text-text-primary leading-relaxed">
-                    {verdictData.rationale}
-                  </p>
+                  <button
+                    className="w-full flex items-center justify-between px-3 py-2.5"
+                    onClick={() => setRationaleOpen(o => !o)}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <AIEngineIcon size={11} className="text-accent-ai" />
+                      <p className="font-mono text-[10px] text-accent-ai uppercase tracking-widest">
+                        AI Rationale
+                      </p>
+                    </div>
+                    <ChevronDown size={12} className={`text-text-tertiary transition-transform ${rationaleOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {rationaleOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-3 pb-3 border-t border-border-subtle pt-2">
+                          <p className="font-sans text-[12px] text-text-primary leading-relaxed">
+                            {verdictData.rationale}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
 
                 {/* Task verification checklist */}
@@ -384,27 +406,84 @@ export function VerificationProcessing() {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
+                  className="card"
                 >
-                  <p className="font-mono text-[10px] text-text-tertiary uppercase tracking-widest mb-2">
-                    Task Verification
-                  </p>
-                  <div className="space-y-1.5">
-                    {verdictData.work_actions.map((action, i) => (
-                      <TaskVerificationRow
-                        key={action.action_id}
-                        action={action}
-                        index={i}
-                        delay={i * 0.08}
-                      />
-                    ))}
-                  </div>
+                  <button
+                    className="w-full flex items-center justify-between px-3 py-2.5"
+                    onClick={() => setTasksOpen(o => !o)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <p className="font-mono text-[10px] text-text-tertiary uppercase tracking-widest">
+                        Task Verification
+                      </p>
+                      <span className="font-mono text-[10px] text-accent-ai">
+                        {verdictData.work_actions.length} tasks
+                      </span>
+                    </div>
+                    <ChevronDown size={12} className={`text-text-tertiary transition-transform ${tasksOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {tasksOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-3 pb-3 border-t border-border-subtle pt-2 space-y-1.5">
+                          {verdictData.work_actions.map((action, i) => (
+                            <TaskVerificationRow
+                              key={action.action_id}
+                              action={action}
+                              index={i}
+                              delay={i * 0.08}
+                            />
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
 
                 {/* Invoice protection */}
-                <InvoiceProtectionPanel
-                  assessment={m3Response!.verification_results.labor_hours_assessment}
-                  delay={0.4}
-                />
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 }}
+                  className="card"
+                >
+                  <button
+                    className="w-full flex items-center justify-between px-3 py-2.5"
+                    onClick={() => setInvoiceOpen(o => !o)}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono text-[10px] text-accent-ai uppercase tracking-widest">
+                        Invoice Intelligence
+                      </span>
+                    </div>
+                    <ChevronDown size={12} className={`text-text-tertiary transition-transform ${invoiceOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {invoiceOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="border-t border-border-subtle">
+                          <InvoiceProtectionPanel
+                            assessment={m3Response!.verification_results.labor_hours_assessment}
+                            delay={0}
+                            className="p-4 space-y-4"
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
 
                 {/* CTA */}
                 <motion.button
