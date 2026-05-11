@@ -125,7 +125,6 @@ function CenterColumn({
   m1Screen: string;
   onSubmit: () => void;
 }) {
-  const { state } = useStore();
   const [activePhase, setActivePhase] = useState(0);
   const [completedPhases, setCompletedPhases] = useState<number[]>([]);
   const startedRef = useRef(false);
@@ -293,9 +292,8 @@ function GuardrailInline() {
   );
 }
 
-function OutputColumn({ m1Response, m1Input, m1WorkActions, onSendToMarketplace }: {
+function OutputColumn({ m1Response, m1WorkActions, onSendToMarketplace }: {
   m1Response: NonNullable<ReturnType<typeof useStore>['state']['m1Response']>;
-  m1Input: ReturnType<typeof useStore>['state']['m1Input'];
   m1WorkActions: ReturnType<typeof useStore>['state']['m1WorkActions'];
   onSendToMarketplace: () => void;
 }) {
@@ -470,7 +468,6 @@ export function Module1Screen() {
               >
                 <OutputColumn
                   m1Response={m1Response}
-                  m1Input={m1Input}
                   m1WorkActions={m1WorkActions}
                   onSendToMarketplace={handleSendToMarketplace}
                 />

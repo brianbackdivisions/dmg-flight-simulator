@@ -6,10 +6,10 @@ import { BEHAVIOR_LABEL_MAP } from '@/data/types';
 
 interface Props {
   providers: ProviderScore[];
-  totalMatched: number;
+  totalMatched?: number;
 }
 
-export function FullProviderList({ providers, totalMatched }: Props) {
+export function FullProviderList({ providers }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
