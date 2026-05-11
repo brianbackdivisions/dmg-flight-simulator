@@ -36,12 +36,9 @@ export function AppShell({ children }: AppShellProps) {
             <div className="w-px h-7 bg-border-subtle opacity-60" />
 
             {/* FLIGHT SIMULATOR label */}
-            <div className="flex flex-col gap-[4px]">
-              <span className="font-mono text-[17px] font-bold tracking-[0.16em] text-text-primary uppercase leading-none">
-                Flight Simulator
-              </span>
-              <div className="h-[2px] w-full rounded-full bg-accent-action opacity-70" />
-            </div>
+            <span className="font-mono text-[17px] font-bold tracking-[0.16em] text-text-primary uppercase leading-none self-center">
+              Flight Simulator
+            </span>
           </div>
 
           {/* Stage rail — centered */}
