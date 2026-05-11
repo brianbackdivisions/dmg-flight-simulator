@@ -18,8 +18,19 @@ export function AppShell({ children }: AppShellProps) {
         <header className="h-16 border-b border-border-subtle bg-bg-surface1 flex items-center px-6 gap-6 shrink-0">
           {/* DMG wordmark + FLIGHT SIMULATOR designation */}
           <div className="flex items-center gap-4 shrink-0">
-            <div className="px-3 py-1.5 rounded-[5px] bg-accent-action shrink-0">
-              <span className="font-mono text-[14px] font-bold text-white tracking-[0.06em] leading-none">DMG</span>
+            {/* DMG wordmark SVG */}
+            <div className="shrink-0">
+              <svg width="64" height="36" viewBox="0 0 64 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text
+                  x="2" y="28"
+                  fontFamily="'Arial Black', 'Arial', sans-serif"
+                  fontWeight="900"
+                  fontSize="28"
+                  letterSpacing="1"
+                  fill="white"
+                >DMG</text>
+                <rect x="2" y="32" width="28" height="3" rx="1.5" fill="#E8672B" />
+              </svg>
             </div>
             <div className="flex flex-col gap-[5px]">
               <span className="font-mono text-[18px] font-bold tracking-[0.18em] text-text-primary uppercase leading-none">

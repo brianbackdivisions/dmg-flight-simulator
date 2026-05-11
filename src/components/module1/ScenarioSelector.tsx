@@ -11,10 +11,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'snow-removal': Snowflake,
 };
 
-const URGENCY_LABEL: Record<string, string> = {
-  emergency: 'Emergency',
-  routine: 'Routine',
-};
 
 export function ScenarioSelector() {
   const { dispatch } = useStore();
@@ -40,7 +36,6 @@ export function ScenarioSelector() {
       <div className="grid grid-cols-3 gap-4 max-w-[860px] w-full">
         {SCENARIOS.map((scenario, i) => {
           const Icon = ICON_MAP[scenario.scenario_id] || Wrench;
-          const isEmergency = scenario.urgency === 'emergency';
 
           return (
             <motion.button
@@ -55,20 +50,9 @@ export function ScenarioSelector() {
                          hover:bg-bg-surface2 transition-all duration-200
                          hover:border-accent-ai hover:shadow-glow-ai group"
             >
-              {/* Icon + badge */}
-              <div className="flex items-center justify-between w-full">
-                <div className="w-9 h-9 rounded-[6px] bg-bg-surface2 border border-border-subtle flex items-center justify-center group-hover:border-accent-ai group-hover:bg-[rgba(0,196,232,0.08)] transition-all text-text-secondary group-hover:text-accent-ai">
-                  <Icon size={18} strokeWidth={1.6} />
-                </div>
-                <span
-                  className={`font-mono text-[10px] px-2 py-0.5 rounded-[3px] border uppercase tracking-wide ${
-                    isEmergency
-                      ? 'bg-[rgba(239,68,68,0.12)] border-status-fail text-status-fail'
-                      : 'bg-[rgba(245,158,11,0.1)] border-status-warn text-status-warn'
-                  }`}
-                >
-                  {URGENCY_LABEL[scenario.urgency]}
-                </span>
+              {/* Icon */}
+              <div className="w-9 h-9 rounded-[6px] bg-bg-surface2 border border-border-subtle flex items-center justify-center group-hover:border-accent-ai group-hover:bg-[rgba(0,196,232,0.08)] transition-all text-text-secondary group-hover:text-accent-ai">
+                <Icon size={18} strokeWidth={1.6} />
               </div>
 
               {/* Title + service line */}
