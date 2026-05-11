@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base:       #080D17;
+  --bg-surface1:   #0C1426;
+  --bg-surface2:   #0F1D35;
+  --border-subtle: #1A2D45;
+  --border-active: #00C4E8;
+  --text-primary:  #EEF2F7;
+  --text-secondary:#7E9BB5;
+  --text-tertiary: #3D5570;
+  --accent-ai:     #00C4E8;
+  --accent-action: #F26522;
+  --status-pass:   #10B981;
+  --status-warn:   #F59E0B;
+  --status-fail:   #EF4444;
+  --glow-ai:       rgba(0, 196, 232, 0.15);
+  --glow-action:   rgba(242, 101, 34, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-base);
+  background-image: radial-gradient(circle, #1A2D45 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* When the page is a background/hidden tab, rAF is paused so Framer Motion
+   animations never complete. Force all motion elements to their end state. */
+body.page-hidden [style*="opacity"] {
+  opacity: 1 !important;
+}
+body.page-hidden [style*="translateY"] {
+  transform: none !important;
+}
+body.page-hidden [style*="translateX"] {
+  transform: none !important;
+}
+body.page-hidden [style*="scale"] {
+  transform: none !important;
+}
+
+.card {
+  background: var(--bg-surface1);
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+}
+
+.glow-ai {
+  border: 1px solid #00C4E8;
+  box-shadow: 0 0 0 1px rgba(0, 196, 232, 0.3), 0 0 16px rgba(0, 196, 232, 0.12);
+}
+
+.status-badge {
+  background: transparent;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-ai {
+  background: rgba(0, 196, 232, 0.1);
+  border: 1px solid #00C4E8;
+  color: #00C4E8;
+}
+
+.badge-pass {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10B981;
+  color: #10B981;
+}
+
+.badge-warn {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid #F59E0B;
+  color: #F59E0B;
+}
+
+.badge-fail {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid #EF4444;
+  color: #EF4444;
+}
+
+.badge-slate {
+  background: rgba(61, 85, 112, 0.2);
+  border: 1px solid #3D5570;
+  color: #7E9BB5;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
