@@ -134,7 +134,7 @@ export function PhotoGallery() {
       });
       const report = await pollVerify(report_id);
       dispatch({ type: 'SET_M3_RESPONSE', payload: report });
-      dispatch({ type: 'SET_M3_SCREEN', payload: 'report' });
+      // Stay on 'processing' — VerificationProcessing handles results in-place
     } catch (err) {
       console.error('Verify error:', err);
       dispatch({ type: 'SET_M3_SCREEN', payload: 'photos' });

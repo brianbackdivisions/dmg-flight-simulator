@@ -413,8 +413,8 @@ export function Module1Screen() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-64px)] px-6 py-6">
-      <div className="grid grid-cols-[1fr_160px_1fr] gap-6 max-w-[1200px] mx-auto">
+    <div className="min-h-[calc(100vh-64px)] px-4 py-5">
+      <div className="grid grid-cols-[1fr_148px_1fr] gap-5 w-full max-w-[1600px] mx-auto">
         {/* Left: intake form */}
         <IntakeColumn loading={loading} />
 
