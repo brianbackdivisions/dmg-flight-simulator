@@ -4,6 +4,7 @@ import { Upload, X, Check, ChevronDown, ArrowRight } from 'lucide-react';
 import { useStore } from '@/state/store';
 import { qualify, match } from '@/api/client';
 import type { QualifyRequest } from '@/api/types';
+import { getScenario } from '@/data/scenarios';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { TaskCard } from './TaskCard';
 import { AIEngineIcon } from '@/components/shared/AIEngineIcon';
@@ -464,7 +465,7 @@ export function Module1Screen() {
     };
 
     try {
-      const result = await qualify(req);
+      const result = await qualify(req, state.selectedScenario ?? undefined);
       dispatch({ type: 'SET_M1_RESPONSE', payload: result.prediction });
       dispatch({ type: 'SET_M1_WORK_ACTIONS', payload: result.workActions });
       dispatch({ type: 'SET_M1_SCREEN', payload: 'output' });
@@ -474,16 +475,32 @@ export function Module1Screen() {
   }
 
   function handleSendToMarketplace() {
-    dispatch({ type: 'SET_STAGE', payload: 'module2' });
-    dispatch({ type: 'SET_M2_SCREEN', payload: 'processing' });
-    match({
+    const scenario = state.selectedScenario ? getScenario(state.selectedScenario) : null;
+    const isCsa = (scenario as { is_csa?: boolean } | undefined)?.is_csa === true;
+
+    const matchReq = {
       service_line_id: m1Response!.service_line_id,
       service_type_id: m1Response!.service_type_id,
       property_id: 'DEMO_HEARTLAND_BLOOMINGTON_IL',
       is_emergency: m1Input.urgency === 'emergency',
       minimum_matching_score: 60,
       minimum_providers_required: 3,
-    }).then((result) => {
+    };
+
+    if (isCsa) {
+      dispatch({ type: 'SET_STAGE', payload: 'module2' });
+      dispatch({ type: 'SET_M2_SCREEN', payload: 'csa-assigned' });
+      match(matchReq, state.selectedScenario ?? undefined).then((result) => {
+        dispatch({ type: 'SET_M2_RESPONSE', payload: result });
+        const csaProvider = result.providers[0];
+        if (csaProvider) dispatch({ type: 'SET_ASSIGNED_PROVIDER', payload: csaProvider });
+      });
+      return;
+    }
+
+    dispatch({ type: 'SET_STAGE', payload: 'module2' });
+    dispatch({ type: 'SET_M2_SCREEN', payload: 'processing' });
+    match(matchReq, state.selectedScenario ?? undefined).then((result) => {
       dispatch({ type: 'SET_M2_RESPONSE', payload: result });
       dispatch({ type: 'SET_M2_SCREEN', payload: 'results' });
     });

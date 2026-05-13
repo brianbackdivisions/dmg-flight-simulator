@@ -132,7 +132,7 @@ export function PhotoGallery() {
       const { report_id } = await startVerify({
         work_id: 'DEMO_WV_PLUMBING_WATER_HEATER_01',
       });
-      const report = await pollVerify(report_id);
+      const report = await pollVerify(report_id, state.selectedScenario ?? undefined);
       dispatch({ type: 'SET_M3_RESPONSE', payload: report });
       // Stay on 'processing' — VerificationProcessing handles results in-place
     } catch (err) {

@@ -172,11 +172,12 @@ export function ProviderRecommendations() {
 
           {/* Step 2 */}
           <div className="flex flex-col gap-0.5">
-            <p className="font-mono text-[10px] text-accent-ai uppercase tracking-wide">Step 2 · AI Ranking</p>
+            <p className="font-mono text-[10px] text-accent-ai uppercase tracking-wide">Step 2 · Match Score</p>
             <p className="font-mono text-[18px] text-accent-ai font-bold leading-none">
               {allProviders.length} shown
             </p>
-            <p className="font-sans text-[11px] text-text-tertiary">ranked by speed & quality</p>
+            <p className="font-sans text-[11px] text-text-tertiary">AI Match Score combines speed, quality, and cost performance dimensions — top match is auto-assigned unless overridden.</p>
+            <p className="font-mono text-[10px] text-text-tertiary">speed · quality · cost</p>
           </div>
         </div>
       </motion.div>
@@ -187,7 +188,7 @@ export function ProviderRecommendations() {
           AI Recommended Providers
         </p>
         <p className="font-sans text-[14px] text-text-secondary">
-          Ranked by speed and quality performance — the top match is auto-assigned unless overridden.
+          AI Match Score combines speed, quality, and cost performance dimensions — top match is auto-assigned unless overridden.
         </p>
       </motion.div>
 

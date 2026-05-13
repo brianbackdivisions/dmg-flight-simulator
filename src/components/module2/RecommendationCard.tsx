@@ -102,7 +102,13 @@ export function RecommendationCard({ provider, rank, delay = 0, onViewDetails }:
             )}
           </div>
         </div>
-        {provider.confidence !== undefined && <ConfidenceDots level={provider.confidence} />}
+        <div className="flex flex-col items-end gap-1.5">
+          {provider.confidence !== undefined && <ConfidenceDots level={provider.confidence} />}
+          <div className="flex flex-col items-end">
+            <span className="font-mono text-[28px] font-bold text-accent-ai leading-none">{provider.score}</span>
+            <span className="font-mono text-[9px] text-text-tertiary uppercase tracking-wider">Match Score</span>
+          </div>
+        </div>
       </div>
 
       {/* ETA + Routing signal row */}

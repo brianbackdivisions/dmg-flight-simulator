@@ -5,12 +5,7 @@ import type {
   WorkVerificationReportV2,
   WorkAction,
 } from '@/data/types';
-import {
-  MOCK_QUALIFY_RESPONSE,
-  MOCK_WORK_ACTIONS,
-  MOCK_MATCH_RESPONSE,
-  MOCK_VERIFY_RESPONSE,
-} from './mock';
+import { getMockForScenario } from './mock';
 
 // Set VITE_USE_MOCK=false in .env to route through the real Demo Gateway
 const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
@@ -46,18 +41,20 @@ function delay(ms: number) {
 
 export async function qualify(
   req: QualifyRequest,
+  scenarioId?: string,
 ): Promise<{ prediction: PredictionResponse; workActions: WorkAction[] }> {
   if (USE_MOCK) {
     await delay(3500 + Math.random() * 1500);
-    return { prediction: MOCK_QUALIFY_RESPONSE, workActions: MOCK_WORK_ACTIONS };
+    const mock = getMockForScenario(scenarioId ?? '');
+    return { prediction: mock.qualify, workActions: mock.workActions };
   }
   return post('/qualify', req);
 }
 
-export async function match(req: MatchRequest): Promise<MatchResponse> {
+export async function match(req: MatchRequest, scenarioId?: string): Promise<MatchResponse> {
   if (USE_MOCK) {
     await delay(7000 + Math.random() * 1000);
-    return MOCK_MATCH_RESPONSE;
+    return getMockForScenario(scenarioId ?? '').match;
   }
   return post('/match', req);
 }
@@ -70,10 +67,10 @@ export async function startVerify(req: VerifyRequest): Promise<{ report_id: stri
   return post('/verify', req);
 }
 
-export async function pollVerify(reportId: string): Promise<WorkVerificationReportV2> {
+export async function pollVerify(reportId: string, scenarioId?: string): Promise<WorkVerificationReportV2> {
   if (USE_MOCK) {
     await delay(3000 + Math.random() * 1000);
-    return MOCK_VERIFY_RESPONSE;
+    return getMockForScenario(scenarioId ?? '').verify;
   }
   return get(`/verify/${reportId}`);
 }

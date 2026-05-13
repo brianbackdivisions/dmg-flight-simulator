@@ -268,7 +268,7 @@ export interface FiltrationStat {
 
 export type AppStage = 'scenario' | 'module1' | 'module2' | 'module3' | 'summary';
 export type Module1Screen = 'form' | 'processing' | 'output';
-export type Module2Screen = 'processing' | 'results';
+export type Module2Screen = 'processing' | 'results' | 'csa-assigned';
 export type Module3Screen = 'photos' | 'processing' | 'report';
 
 export interface DemoState {

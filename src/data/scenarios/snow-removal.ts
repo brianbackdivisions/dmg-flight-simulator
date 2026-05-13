@@ -4,6 +4,7 @@ export const snowRemovalScenario = {
   service_line: 'Snow & Ice',
   urgency: 'routine' as const,
   site_profile: 'Grocery Store',
+  is_csa: true as const,
 
   input: {
     property: 'National Grocery Store – Minneapolis, MN',

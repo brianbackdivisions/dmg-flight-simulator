@@ -4,6 +4,7 @@ export const landscapingScenario = {
   service_line: 'Landscaping',
   urgency: 'routine' as const,
   site_profile: 'Strip Mall',
+  is_csa: true as const,
 
   input: {
     property: 'National Strip Mall – Columbus, OH',

@@ -4,12 +4,13 @@ import { ceilingTileScenario } from './ceiling-tile-damage';
 import { landscapingScenario } from './landscaping';
 import { snowRemovalScenario } from './snow-removal';
 
-export type Scenario =
+export type Scenario = (
   | typeof hotWaterHeaterScenario
   | typeof hvacScenario
   | typeof ceilingTileScenario
   | typeof landscapingScenario
-  | typeof snowRemovalScenario;
+  | typeof snowRemovalScenario
+) & { is_csa?: boolean };
 
 export const SCENARIOS: Scenario[] = [
   hotWaterHeaterScenario,

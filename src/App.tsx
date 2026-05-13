@@ -6,6 +6,7 @@ import { ScenarioSelector } from '@/components/module1/ScenarioSelector';
 import { Module1Screen } from '@/components/module1/Module1Screen';
 import { MarketplaceProcessing } from '@/components/module2/MarketplaceProcessing';
 import { ProviderRecommendations } from '@/components/module2/ProviderRecommendations';
+import { CSAAssignedScreen } from '@/components/module2/CSAAssignedScreen';
 import { PhotoGallery } from '@/components/module3/PhotoGallery';
 import { VerificationProcessing } from '@/components/module3/VerificationProcessing';
 import { VerdictReport } from '@/components/module3/VerdictReport';
@@ -23,6 +24,7 @@ function AppContent() {
     if (stage === 'module2') {
       if (m2Screen === 'processing') return <MarketplaceProcessing />;
       if (m2Screen === 'results') return <ProviderRecommendations />;
+      if (m2Screen === 'csa-assigned') return <CSAAssignedScreen />;
     }
 
     if (stage === 'module3') {
